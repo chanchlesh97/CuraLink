@@ -1,9 +1,11 @@
 package com.curalink.patientservice.service;
 
+import billing.BillingAccountResponse;
 import com.curalink.patientservice.DTO.PatientRequestDTO;
 import com.curalink.patientservice.DTO.PatientResponseDTO;
 import com.curalink.patientservice.exception.EmailAlreadyExistsException;
 import com.curalink.patientservice.exception.PatientNotFoundException;
+import com.curalink.patientservice.grpc.BillingServiceGrpcClient;
 import com.curalink.patientservice.mapper.PatientMapper;
 import com.curalink.patientservice.model.Patient;
 import com.curalink.patientservice.repository.PatientRepository;
@@ -15,9 +17,11 @@ import java.util.UUID;
 @Service
 public class PatientService {
     PatientRepository patientRepository;
+    BillingServiceGrpcClient billingServiceGrpcClient;
 
-    public PatientService(PatientRepository patientRepository) {
+    public PatientService(PatientRepository patientRepository, BillingServiceGrpcClient billingServiceGrpcClient) {
         this.patientRepository = patientRepository;
+        this.billingServiceGrpcClient = billingServiceGrpcClient;
     }
 
     public List<PatientResponseDTO> getPatients(){
@@ -30,6 +34,8 @@ public class PatientService {
                 throw new EmailAlreadyExistsException("A patient with this email already exists: " + patientRequestDTO.getEmail());
             }
         Patient newPatient = patientRepository.save(PatientMapper.toModel(patientRequestDTO));
+          BillingAccountResponse response = billingServiceGrpcClient.createBillingAccount(newPatient.getId().toString(), newPatient.getName(), newPatient.getEmail());
+          System.out.println("Billing Account created: " + response.toString());
         return PatientMapper.toDTO(newPatient);
     }
 
