@@ -1,0 +1,22 @@
+server:
+  port: 4004
+
+spring:
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: patient-service-routes
+              uri: http://patient-service:4000
+              predicates:
+                - Path=/api/v1/patients/**
+#              filters:
+#                - StripPrefix=2
+
+            - id: api-docs-patient-route
+              uri: http://patient-service:4000
+              predicates:
+                - Path=/api-docs/patients
+              filters:
+                - RewritePath=/api-docs/patients,/v3/api-docs
