@@ -1,6 +1,7 @@
 package com.curalink.patientservice.controller;
 
 import com.curalink.patientservice.DTO.CreatePatientValidationGroup;
+import com.curalink.patientservice.DTO.PagedPatientResponseDTO;
 import com.curalink.patientservice.DTO.PatientRequestDTO;
 import com.curalink.patientservice.DTO.PatientResponseDTO;
 import com.curalink.patientservice.service.PatientService;
@@ -26,8 +27,15 @@ public class PatientController {
 
     @GetMapping
     @Operation(summary = "Get all patients")
-    public ResponseEntity<List<PatientResponseDTO>> getPatients(){
-        List<PatientResponseDTO> patients = patientService.getPatients();
+    public ResponseEntity<PagedPatientResponseDTO
+            > getPatients(
+          @RequestParam(defaultValue = "1") int page,
+          @RequestParam(defaultValue = "10") int size,
+          @RequestParam(defaultValue = "asc") String sort,
+          @RequestParam(defaultValue = "name") String sortField,
+          @RequestParam(defaultValue = "") String searchValue
+    ){
+        PagedPatientResponseDTO patients = patientService.getPatients(page, size, sort, sortField, searchValue);
         return ResponseEntity.ok().body(patients);
     }
 
