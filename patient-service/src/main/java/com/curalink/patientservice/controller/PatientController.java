@@ -35,6 +35,7 @@ public class PatientController {
           @RequestParam(defaultValue = "name") String sortField,
           @RequestParam(defaultValue = "") String searchValue
     ){
+        System.out.println("Received request to get patients.");
         PagedPatientResponseDTO patients = patientService.getPatients(page, size, sort, sortField, searchValue);
         return ResponseEntity.ok().body(patients);
     }
