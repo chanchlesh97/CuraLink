@@ -77,7 +77,7 @@ public class PatientService {
         Patient newPatient = patientRepository.save(PatientMapper.toModel(patientRequestDTO));
         BillingAccountResponse response = billingServiceGrpcClient.createBillingAccount(newPatient.getId().toString(), newPatient.getName(), newPatient.getEmail());
         System.out.println("Billing Account created: " + response.toString());
-        kafkaProducer.sendEvent(newPatient);
+        kafkaProducer.sendPatientCreatedEvent(newPatient);
         return PatientMapper.toDTO(newPatient);
     }
 
