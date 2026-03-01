@@ -31,3 +31,11 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Other files and directories to ignore
+target
+.git
+.gitignore
+Dockerfile
+README.md
+cdk.out

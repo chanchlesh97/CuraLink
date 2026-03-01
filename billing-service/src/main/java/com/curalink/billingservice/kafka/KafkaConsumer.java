@@ -14,7 +14,7 @@ public class KafkaConsumer {
     public void consumeEvent(byte[] event) {
         try {
             BillingAccountEvent billingAccountEvent = BillingAccountEvent.parseFrom(event);
-            log.info("Recieved billing account event: [PatientId: {}, Name: {}, Email: {}]",
+            log.info("Received billing account event: [PatientId: {}, Name: {}, Email: {}]",
                     billingAccountEvent.getPatientId(),
                     billingAccountEvent.getName(),
                     billingAccountEvent.getEmail());
