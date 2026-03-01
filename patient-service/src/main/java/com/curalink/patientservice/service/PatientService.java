@@ -47,6 +47,7 @@ public class PatientService {
     )
     public PagedPatientResponseDTO getPatients(int page, int size, String sort, String sortField, String searchValue){
         log.info("[REDIS]: Cache miss - fetching patients from DB.");
+        // cache miss metrics is handled by aspects
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {

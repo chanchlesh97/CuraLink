@@ -1,1 +1,5 @@
 /.idea
+/cdk.out/localstack.template.json
+/cdk.out/cdk.out
+/cdk.out/manifest.json
+/cdk.out/tree.json
