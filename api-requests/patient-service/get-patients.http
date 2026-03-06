@@ -2,3 +2,11 @@
 GET http://localhost:4004/api/v1/patients?sort=desc&page=1&size=3
 Authorization: Bearer {{token}}
 ###
+
+
+
+
+### GET request to fetch all patients
+GET http://lb-3bd1bc7a.elb.localhost.localstack.cloud:4004/api/v1/patients?sort=desc&page=1&size=3
+Authorization: Bearer {{token}}
+###
